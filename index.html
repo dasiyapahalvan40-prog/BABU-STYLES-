@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultra Video Editor</title>
+
+<style>
+body {
+  margin:0;
+  font-family: Arial;
+  background:#0f1111;
+  color:white;
+}
+
+/* HEADER */
+.header {
+  background:#131921;
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo {
+  font-size:20px;
+  color:#00a8ff;
+}
+
+/* MAIN */
+.container {
+  padding:10px;
+}
+
+video {
+  width:100%;
+  border-radius:10px;
+  margin-top:10px;
+}
+
+/* TIMELINE */
+.timeline {
+  background:#222;
+  height:60px;
+  margin-top:10px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  overflow-x:auto;
+}
+
+.clip {
+  width:80px;
+  height:40px;
+  background:#555;
+  margin:5px;
+  border-radius:5px;
+}
+
+/* BUTTONS */
+.controls {
+  margin-top:10px;
+}
+
+button {
+  margin:5px;
+  padding:8px;
+  border:none;
+  border-radius:5px;
+  background:#00a8ff;
+  color:white;
+}
+
+/* SLIDER */
+input[type=range] {
+  width:100%;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="logo">🎬 Ultra Editor</div>
+  <div>Export 4K</div>
+</div>
+
+<div class="container">
+
+<input type="file" id="upload" accept="video/*">
+
+<video id="video" controls></video>
+
+<!-- Timeline -->
+<div class="timeline" id="timeline"></div>
+
+<div class="controls">
+
+<h3>🎨 Filters</h3>
+<button onclick="setFilter('contrast(1.5) saturate(1.5)')">HDR</button>
+<button onclick="setFilter('brightness(1.4)')">Bright</button>
+<button onclick="setFilter('grayscale(1)')">B&W</button>
+<button onclick="setFilter('none')">Normal</button>
+
+<h3>⚡ Speed</h3>
+<button onclick="setSpeed(0.5)">Slow</button>
+<button onclick="setSpeed(1)">Normal</button>
+<button onclick="setSpeed(2)">Fast</button>
+
+<h3>🎚 Brightness</h3>
+<input type="range" min="1" max="2" step="0.1" onchange="setBrightness(this.value)">
+
+<h3>🔊 Voice Effects</h3>
+<button onclick="setVoice(0.5)">Heavy</button>
+<button onclick="setVoice(1)">Normal</button>
+<button onclick="setVoice(1.5)">Thin</button>
+<button onclick="setVoice(2)">Chipmunk</button>
+
+<h3>✂️ Trim</h3>
+Start: <input id="start" type="number" value="0">
+End: <input id="end" type="number" value="10">
+<button onclick="trim()">Apply</button>
+
+<h3>🎬 Export</h3>
+<button onclick="exportVideo()">Download</button>
+
+</div>
+
+</div>
+
+<script>
+let video = document.getElementById("video");
+let timeline = document.getElementById("timeline");
+
+document.getElementById("upload").onchange = function(e){
+  let file = e.target.files[0];
+  video.src = URL.createObjectURL(file);
+
+  // fake timeline clips
+  timeline.innerHTML = "";
+  for(let i=0;i<10;i++){
+    let div = document.createElement("div");
+    div.className="clip";
+    timeline.appendChild(div);
+  }
+}
+
+function setFilter(f){
+  video.style.filter = f;
+}
+
+function setSpeed(s){
+  video.playbackRate = s;
+}
+
+function setBrightness(b){
+  video.style.filter = "brightness("+b+")";
+}
+
+function setVoice(v){
+  video.playbackRate = v;
+}
+
+function trim(){
+  let start = document.getElementById("start").value;
+  video.currentTime = start;
+}
+
+function exportVideo(){
+  alert("⚠️ Real export ke liye backend (FFmpeg) chahiye");
+}
+</script>
+
+</body>
+</html>
