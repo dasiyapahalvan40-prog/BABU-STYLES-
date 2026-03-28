@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pro Editor</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="header">🎬 Pro Editor</div>
+
+<input type="file" id="upload" multiple>
+
+<video id="video" controls></video>
+
+<!-- Timeline -->
+<input type="range" id="timeline" min="0" max="100" value="0">
+
+<!-- MAIN 4 BUTTONS -->
+<div class="main-buttons">
+  <button onclick="cut()">Cut</button>
+  <button onclick="audio()">Audio</button>
+  <button onclick="effects()">Effects</button>
+  <button onclick="exportVideo()">Export</button>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
